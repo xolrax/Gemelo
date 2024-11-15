@@ -52,7 +52,7 @@ def quest_gpt(textin):
     - varout: String con la respuesta generada por el modelo.
     """
     
-    client = OpenAI(api_key='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX) #Aca colocar API
+    client = OpenAI(api_key='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') #Aca colocar API
     
     
     
