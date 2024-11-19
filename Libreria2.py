@@ -1023,14 +1023,14 @@ def exportar_a_excel(df, ruta_archivo):
     print(f'Archivo Excel guardado en {ruta_archivo}')
 
 
-ruta_archivopub = "C:\\UNAB\\CECAN\\Revision Sistematica\\pubmed.txt"
+ruta_archivopub = r"C:\Users\xalve\OneDrive\Documentos\GitHub\Gemelo\pubmed-digitaltwi-set.txt"
 datos_pubmed = crea_contenido_pubmed(ruta_archivopub)
-ruta_archivo = "C:\\UNAB\\CECAN\\Revision Sistematica\\scopus.bib"
+ruta_archivo = r"C:\Users\xalve\OneDrive\Documentos\GitHub\Gemelo\gemelo_digital_scopus.bib"
 datos_scopus = crea_contenido_scopus(ruta_archivo)
 datos_fusionados = fusionar_tablas(datos_scopus, datos_pubmed)
 datos_ordenados = ordenar_por_titulo(datos_fusionados)
 
-archivo_salida = 'C:\\UNAB\\CECAN\\Revision Sistematica\\salida.xlsx'
+archivo_salida = r'C:\Users\xalve\OneDrive\Desktop\salida.xlsx'
 screaning2(datos_ordenados, archivo_salida, inicio=8)
 
 
