@@ -1,6 +1,5 @@
 import os
 from openai import OpenAI
-import os
 import PyPDF2
 import pdfplumber
 import fitz  # PyMuPDF
@@ -10,8 +9,12 @@ import unicodedata
 import requests
 import xml.etree.ElementTree as ET
 import pandas as pd
+from dotenv import load_dotenv
 
 
+load_dotenv()
+# Accediendo a las variables de entorno
+api_key_gtp = os.getenv('API_KEY')
 
 def normalize_text(text):
     # Normalizar quitando acentos y pasando a ASCII
@@ -52,7 +55,7 @@ def quest_gpt(textin):
     - varout: String con la respuesta generada por el modelo.
     """
     
-    client = OpenAI(api_key='XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX') #Aca colocar API
+    client = OpenAI(api_key=api_key_gtp) #Aca colocar API
     
     
     
