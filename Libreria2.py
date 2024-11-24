@@ -1033,7 +1033,7 @@ datos_scopus = crea_contenido_scopus(ruta_archivo)
 datos_fusionados = fusionar_tablas(datos_scopus, datos_pubmed)
 datos_ordenados = ordenar_por_titulo(datos_fusionados)
 
-archivo_salida = r'C:\Users\xalve\Desktop\salida.xlsx'
+archivo_salida = r"C:\Users\xalve\Desktop\salida.xlsx"
 screaning2(datos_ordenados, archivo_salida, inicio=8)
 
 
