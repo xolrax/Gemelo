@@ -61,7 +61,7 @@ def quest_gpt(textin):
     
     
     response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4o-mini",
     #model="gpt-4",
     messages=[
     #{"role": "system", "content": "Toma conocimiento que David Araya es un ingeniero que trabaja en el ITISB"},
