@@ -1,4 +1,5 @@
 import fitz  # PyMuPDF
+import json
 
 def extract_text_with_details(pdf_path):
     """
@@ -24,9 +25,9 @@ def extract_text_with_details(pdf_path):
                 
                 for block in text_dict.get("blocks", []):
                     # Procesa solo los bloques que contengan texto y no imágenes u otros elementos
-                    if block.get("type", 0) == 0 and "lines" in block:  # type 0 indica un bloque de texto
-                        for line in block["lines"]:
-                            for span in line["spans"]:  # Itera sobre fragmentos (spans)
+                    if block.get("type", 0) == 0:
+                        for line in block.get("lines", []):
+                            for span in line.get("spans", []):  # Itera sobre fragmentos (spans)
                                 char_count += len(span["text"])  # Incrementa el contador de caracteres
                                 detail = {
                                     "page": page_num + 1,
@@ -42,6 +43,32 @@ def extract_text_with_details(pdf_path):
 
         return text_details
 
-    except (FileNotFoundError, ValueError) as e:
+    except (FileNotFoundError, ValueError, TypeError) as e:
         print(f"Error al procesar el PDF: {e}")
         return None
+
+def save_text_details_to_json(text_details, output_path):
+    """
+    Guarda la lista de detalles de texto en un archivo JSON.
+
+    Args:
+        text_details (list): Lista de detalles de texto.
+        output_path (str): Ruta para guardar el archivo JSON.
+    """
+    try:
+        with open(output_path, 'w', encoding='utf-8') as json_file:
+            json.dump(text_details, json_file, ensure_ascii=False, indent=4)
+    except (OSError, TypeError) as e:
+        print(f"Error al guardar el archivo JSON: {e}")
+
+# Ejemplo de uso
+def main():
+    pdf_path = "ruta/al/archivo.pdf"
+    output_json_path = "ruta/al/archivo.json"
+
+    text_details = extract_text_with_details(pdf_path)
+    if text_details:
+        save_text_details_to_json(text_details, output_json_path)
+
+if __name__ == "__main__":
+    main()
