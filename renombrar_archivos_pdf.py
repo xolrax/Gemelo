@@ -31,6 +31,14 @@ def crear_archivo_excel(ruta_carpeta, ruta_excel):
     print(f"Archivo Excel creado: {ruta_excel}")
 
 def renombrar_archivos_pdf(ruta_carpeta, ruta_excel, sanitizar=True):
+    """
+    Renombra los archivos PDF en una carpeta basándose en un archivo Excel que proporciona los nombres nuevos.
+
+    Parámetros:
+    ruta_carpeta (str): La ruta a la carpeta que contiene los archivos PDF a renombrar.
+    ruta_excel (str): La ruta al archivo Excel que contiene dos columnas: 'Nombre Original' y 'Nombre Nuevo'.
+    sanitizar (bool): Si es True, se sanitizarán los nombres nuevos para eliminar caracteres no permitidos.
+    """
     # Verificar si la ruta de la carpeta existe
     if not os.path.exists(ruta_carpeta):
         raise FileNotFoundError("Error: La ruta de la carpeta no existe.")
