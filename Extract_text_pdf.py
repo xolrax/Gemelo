@@ -76,7 +76,7 @@ def extract_text_with_details_block(pdf_path):
                         char_count += len(block_text)  # Incrementa el contador de caracteres
                         detail = {
                             "page": page_num + 1,
-                            "block_bbox": block_bbox,  # Posición del bloque
+                            "block_bbox": block_bbox,  # Coordenada y0 del bloque
                             "text": block_text,        # Texto del bloque
                             "char_count": char_count   # Contador de caracteres acumulado
                         }
@@ -104,12 +104,15 @@ def save_text_details_to_json(text_details, output_path):
 
 # Ejemplo de uso
 def main():
-    pdf_path = "ruta/al/archivo.pdf"
-    output_json_path = "ruta/al/archivo.json"
+    pdf_path = r"C:\Users\xalve\Desktop\Ej_PDF\Liquidación.pdf"
+    output_json_path1 = r"C:\Users\xalve\Desktop\Ej_PDF\details.json"
+    output_json_path2 = r"C:\Users\xalve\Desktop\Ej_PDF\details_block.json"
 
-    text_details = extract_text_with_details(pdf_path)
-    if text_details:
-        save_text_details_to_json(text_details, output_json_path)
-
+    text_details1 = extract_text_with_details(pdf_path)
+    text_details2 = extract_text_with_details_block(pdf_path)
+    if text_details1:
+        save_text_details_to_json(text_details1, output_json_path1)
+    if text_details2:
+        save_text_details_to_json(text_details2, output_json_path2)
 if __name__ == "__main__":
     main()
