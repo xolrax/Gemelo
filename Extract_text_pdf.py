@@ -10,7 +10,15 @@ def extract_text_with_details(pdf_path):
         pdf_path (str): Ruta al archivo PDF.
 
     Returns:
-        list: Lista de detalles de texto (líneas, fuente, tamaño, color, posición, contador de caracteres acumulado).
+        list: Lista de detalles de texto, donde cada entrada contiene:
+            - page (int): Número de la página.
+            - block_bbox (list): Área delimitadora (bounding box) del bloque (x0, y0, x1, y1).
+            - line_bbox (list): Posición de la línea (x0, y0, x1, y1).
+            - text (str): Texto del span.
+            - font (str): Tipo de fuente.
+            - size (float): Tamaño de la fuente.
+            - color (int): Color del texto.
+            - char_count (int): Contador de caracteres acumulado.
     """
     try:
         text_details = []
@@ -31,7 +39,7 @@ def extract_text_with_details(pdf_path):
                                 char_count += len(span["text"])  # Incrementa el contador de caracteres
                                 detail = {
                                     "page": page_num + 1,
-                                    "block_bbox": block["bbox"],  # Posición del bloque
+                                    "block_bbox": block["bbox"],  # Área delimitadora (bounding box) del bloque (x0, y0, x1, y1)
                                     "line_bbox": line["bbox"],    # Posición de la línea
                                     "text": span["text"],         # Texto del span
                                     "font": span["font"],         # Tipo de fuente
@@ -55,7 +63,11 @@ def extract_text_with_details_block(pdf_path):
         pdf_path (str): Ruta al archivo PDF.
 
     Returns:
-        list: Lista de detalles de texto (texto, posición del bloque, contador de caracteres acumulado).
+        list: Lista de detalles de texto, donde cada entrada contiene:
+            - page (int): Número de la página.
+            - block_bbox (float): Coordenada y0 del bloque.
+            - text (str): Texto del bloque.
+            - char_count (int): Contador de caracteres acumulado.
     """
     try:
         text_details = []
