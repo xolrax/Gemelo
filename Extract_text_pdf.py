@@ -3,14 +3,14 @@ import json
 
 def extract_text_with_details(pdf_path):
     """
-    Extrae líneas de texto de un archivo PDF junto con sus detalles como tipo de fuente y tamaño, 
+    Extrae líneas de texto de un archivo PDF junto con sus detalles como tipo de fuente, tamaño y color, 
     procesando solo los bloques que contengan texto.
 
     Args:
         pdf_path (str): Ruta al archivo PDF.
 
     Returns:
-        list: Lista de detalles de texto (líneas, fuente, tamaño, posición).
+        list: Lista de detalles de texto (líneas, fuente, tamaño, color, posición, contador de caracteres acumulado).
     """
     try:
         text_details = []
@@ -47,17 +47,15 @@ def extract_text_with_details(pdf_path):
         print(f"Error al procesar el PDF: {e}")
         return None
 
-
 def extract_text_with_details_block(pdf_path):
     """
-    Extrae líneas de texto de un archivo PDF junto con sus detalles como tipo de fuente y tamaño, 
-    procesando solo los bloques que contengan texto.
+    Extrae líneas de texto de un archivo PDF, procesando solo los bloques que contengan texto.
 
     Args:
         pdf_path (str): Ruta al archivo PDF.
 
     Returns:
-        list: Lista de detalles de texto (líneas, fuente, tamaño, posición).
+        list: Lista de detalles de texto (texto, posición del bloque, contador de caracteres acumulado).
     """
     try:
         text_details = []
@@ -71,15 +69,17 @@ def extract_text_with_details_block(pdf_path):
                 text_blocks = page.get_text("blocks")  # Obtiene el texto estructurado como bloques
                 
                 for block in text_blocks:
+                    # Desempaqueta los valores del bloque
+                    block_bbox, block_text = block[1], block[4]
                     # Procesa solo los bloques que contengan texto y no imágenes u otros elementos
-                    if block[4] != "":
+                    if block_text:
+                        char_count += len(block_text)  # Incrementa el contador de caracteres
                         detail = {
                             "page": page_num + 1,
-                            "block_bbox": block[1],  # Posición del bloque
-                            "text": block[4],         # Texto del bloque
-                            "char_count": char_count + len(block[4])  # Contador de caracteres acumulado
+                            "block_bbox": block_bbox,  # Posición del bloque
+                            "text": block_text,        # Texto del bloque
+                            "char_count": char_count   # Contador de caracteres acumulado
                         }
-                        char_count += len(block[4])
                         text_details.append(detail)
 
         return text_details
@@ -87,7 +87,6 @@ def extract_text_with_details_block(pdf_path):
     except (FileNotFoundError, ValueError, TypeError) as e:
         print(f"Error al procesar el PDF: {e}")
         return None
-
 
 def save_text_details_to_json(text_details, output_path):
     """
