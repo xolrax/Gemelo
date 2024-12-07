@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 from dotenv import load_dotenv
 
-
+# Cargar las variables desde el archivo .env
 load_dotenv()
 # Accediendo a las variables de entorno
 api_key_gtp = os.getenv('API_KEY')
